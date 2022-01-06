@@ -10,7 +10,7 @@ const io = require('socket.io')(server, {
     cors: { origin: "*"}
 });
 var mysql = require('mysql');
-
+var mysqlTimestamp = "2021-22-3";
 /** storing db configuration */
 var connection = mysql.createConnection({
     host     : 'localhost',
@@ -23,7 +23,7 @@ connection.connect();
 app.get('/',function(req,res){
 	res.end("Welcome to Node.js HTTPS Servern");
 })
-var mysqlTimestamp = moment().utc().format('YYYY-MM-DD HH:mm:ss');
+// var mysqlTimestamp = moment().utc().format('YYYY-MM-DD HH:mm:ss');
 
 io.on('connection', (socket) => {
     console.log('connection');

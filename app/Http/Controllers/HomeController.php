@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Chat;
 use Auth;
 class HomeController extends Controller
 {
@@ -12,9 +13,10 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(User $user,Chat $chat)
     {
         $this->user = $user;
+        $this->chat = $chat;
         $this->middleware('auth');
     }
 
@@ -38,6 +40,7 @@ class HomeController extends Controller
     {
         $fromId = Auth::user();
         $toId = $this->user->where('id',$id)->select('id','name')->first();
-        return view('chat',compact('fromId','toId'));
+        $chats = $this->chat->where('from_id',$fromId->id)->orwhere('to_id',$toId->id)->get();
+        return view('chat',compact('fromId','toId','chats'));
     }
 }

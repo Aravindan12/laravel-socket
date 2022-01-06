@@ -57,9 +57,11 @@
             <input type="hidden" name = "to_id" value="{{$toId->id}}" id="toId">
             <div class="row chat-row">
                 <div class="chat-content">
+                    @foreach ($chats as $chat)
                     <ul style="overflow-wrap: break-word">
-                      
-                    </ul>
+                      {{$chat->message}}
+                    </ul>  
+                    @endforeach
                 </div>
 
                 <div class="chat-section">
