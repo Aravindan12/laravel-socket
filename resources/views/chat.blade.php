@@ -100,7 +100,10 @@
                 });
 
                 socket.on('sendChatToClient', (message) => {
+
+                    if(message.to == fromId && message.from == toId){
                     $('.chat-content ul').append(`<div class="receiver">`+toName+`:<li>${message.msg}</li></div>`);
+                    }
                 });
             });
         </script>

@@ -40,7 +40,16 @@ class HomeController extends Controller
     {
         $fromId = Auth::user();
         $toId = $this->user->where('id',$id)->select('id','name')->first();
-        $chats = $this->chat->where('from_id',$fromId->id)->orwhere('to_id',$toId->id)->get();
+        $from = $fromId->id;
+        $to = $toId->id;
+        $chats = $this->chat->where(function ($query) use ($from,$to) {
+            $query->where('from_id', '=', $from)
+                  ->where('to_id', '=', $to);
+        })
+        ->orWhere(function ($query) use ($from,$to) {
+            $query->where('from_id', '=', $to)
+                  ->where('to_id', '=', $from);
+        })->get();
         return view('chat',compact('fromId','toId','chats'));
     }
 }
